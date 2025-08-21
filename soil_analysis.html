@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Soil Analysis AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #d0f4de, #a9def9, #e4c1f9);
+      background-size: 600% 600%;
+      animation: gradientShift 20s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 750px;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      color: #2d572c;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .upload-box {
+      border: 2px dashed #4caf50;
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      background-color: #f0fff4;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .upload-box:hover {
+      transform: scale(1.03);
+      background-color: #e6ffe6;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    #imagePreview {
+      width: 100%;
+      max-height: 300px;
+      margin-top: 15px;
+      border-radius: 15px;
+      display: none;
+      object-fit: cover;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #43a047;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 30px;
+      text-align: left;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .label {
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    .value {
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🌱 Soil Image Analysis</h1>
+    <p>Upload a soil image to get AI-powered crop recommendations.</p>
+
+    <label class="upload-box" for="soilImage">
+      📸 Click to upload soil image
+      <input type="file" id="soilImage" accept="image/*">
+    </label>
+
+    <img id="imagePreview" alt="Soil Preview">
+    
+    <button onclick="analyzeSoil()">🔍 Analyze</button>
+
+    <div id="result" class="result" style="display: none;">
+      <div class="result-card">
+        <p><span class="label">🌾 Recommended Crop:</span> <span class="value" id="crop"></span></p>
+      </div>
+      <div class="result-card">
+        <p><span class="label">🌡️ Soil pH:</span> <span class="value" id="ph"></span></p>
+        <p><span class="label">💧 Moisture:</span> <span class="value" id="moisture"></span></p>
+        <p><span class="label">🌍 Soil Type:</span> <span class="value" id="soilType"></span></p>
+        <p><span class="label">🧪 Nutrient Level:</span> <span class="value" id="nutrient"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('soilImage');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = 'block';
+      }
+    });
+
+    function analyzeSoil() {
+      // Fake AI output (mock)
+      const result = {
+        crop: "Rice 🌾",
+        ph: "6.8",
+        moisture: "28%",
+        soilType: "Alluvial",
+        nutrient: "High Nitrogen"
+      };
+
+      // Display results
+      document.getElementById('crop').innerText = result.crop;
+      document.getElementById('ph').innerText = result.ph;
+      document.getElementById('moisture').innerText = result.moisture;
+      document.getElementById('soilType').innerText = result.soilType;
+      document.getElementById('nutrient').innerText = result.nutrient;
+
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

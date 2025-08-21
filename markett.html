@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🛒 Market Basket for Farmers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #4ade80;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-lime-100 via-yellow-50 to-green-100 min-h-screen p-6">
+
+  <header class="text-3xl font-bold text-green-700 text-center mb-8">🌿 Farmer's Market Basket</header>
+
+  <main class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- Product Card Template -->
+    <div id="productContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 col-span-3"></div>
+
+    <!-- Basket Section -->
+    <aside class="col-span-1 bg-white border border-green-300 rounded-xl p-5 shadow-lg sticky top-6 h-fit max-h-[80vh] overflow-y-auto">
+      <h2 class="text-xl font-semibold text-green-700 mb-4">🧺 Your Basket</h2>
+      <ul id="basketList" class="space-y-2 text-gray-800"></ul>
+      <div class="mt-4 pt-4 border-t border-green-300 font-bold text-lg text-green-800">
+        Total: ₹<span id="totalAmount">0</span>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const products = [
+      { name: "Onion", price: 20 },
+      { name: "Mustard", price: 60 },
+      { name: "Maize", price: 18 },
+      { name: "Rice", price: 35 },
+      { name: "Cabbage", price: 12 },
+      { name: "Mango", price: 80 },
+      { name: "Tomato", price: 15 },
+      { name: "Potato", price: 25 },
+      { name: "Wheat", price: 28 },
+      { name: "Banana", price: 40 },
+    ];
+
+    const basket = {};
+    const productContainer = document.getElementById("productContainer");
+    const basketList = document.getElementById("basketList");
+    const totalAmount = document.getElementById("totalAmount");
+
+    function updateBasket() {
+      basketList.innerHTML = "";
+      let total = 0;
+      for (let item in basket) {
+        const { price, quantity } = basket[item];
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span>${item} × ${quantity}</span>
+            <span>₹${price * quantity}</span>
+          </div>`;
+        basketList.appendChild(li);
+        total += price * quantity;
+      }
+      totalAmount.textContent = total;
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement("div");
+      card.className = "bg-white rounded-2xl p-4 shadow-md border border-green-200 flex flex-col items-center";
+
+      card.innerHTML = `
+        <div class="text-xl font-semibold text-green-800 mb-2">${product.name}</div>
+        <div class="text-gray-600 mb-4">₹${product.price} / kg</div>
+        <div class="flex items-center space-x-4">
+          <button class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xl font-bold hover:bg-red-200">-</button>
+          <span class="text-lg font-medium" id="qty-${product.name}">0</span>
+          <button class="bg-green-200 text-green-800 px-3 py-1 rounded-full text-xl font-bold hover:bg-green-300">+</button>
+        </div>
+      `;
+
+      const minusBtn = card.querySelector("button:nth-child(1)");
+      const plusBtn = card.querySelector("button:nth-child(3)");
+      const qtySpan = card.querySelector(`#qty-${product.name}`);
+
+      plusBtn.addEventListener("click", () => {
+        if (!basket[product.name]) {
+          basket[product.name] = { price: product.price, quantity: 1 };
+        } else {
+          basket[product.name].quantity++;
+        }
+        qtySpan.textContent = basket[product.name].quantity;
+        updateBasket();
+      });
+
+      minusBtn.addEventListener("click", () => {
+        if (basket[product.name]) {
+          basket[product.name].quantity--;
+          if (basket[product.name].quantity <= 0) {
+            delete basket[product.name];
+            qtySpan.textContent = "0";
+          } else {
+            qtySpan.textContent = basket[product.name].quantity;
+          }
+          updateBasket();
+        }
+      });
+
+      productContainer.appendChild(card);
+    }
+
+    products.forEach(createProductCard);
+  </script>
+</body>
+</html>

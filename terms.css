@@ -1,0 +1,121 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #f8f9fa, #e0eafc);
+  color: #2c3e50;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
+  text-align: center;
+  padding: 70px 20px 50px;
+  animation: slideDown 1s ease;
+}
+
+.header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2em;
+  opacity: 0.95;
+}
+
+/* Main Container */
+.container {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  gap: 30px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Card Style */
+.card {
+  background-color: #ffffff;
+  border-left: 8px solid #667eea;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.7s ease both;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+  color: #5a2d82;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.card p {
+  color: #333;
+  font-size: 1em;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #f0f4f8;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 40px;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

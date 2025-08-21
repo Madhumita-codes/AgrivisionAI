@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>India Weather Forecast</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      color: #fff;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    select, button {
+      padding: 0.5rem;
+      margin: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #2980b9;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    select:hover, button:hover {
+      background: #e0f7fa;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      margin-top: 2rem;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    canvas {
+      max-width: 100%;
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    #map {
+      height: 400px;
+      margin-top: 1rem;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌦️ India Weather Forecast</h1>
+    <select id="stateSelect">
+      <option value="current">📍 Use Current Location</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Kolkata">Kolkata</option>
+      <option value="Bengaluru">Bengaluru</option>
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Ahmedabad">Ahmedabad</option>
+    </select>
+    <button onclick="getWeather()">Get Weather</button>
+
+    <div class="card">
+      <h2 id="location">Location: --</h2>
+      <div id="map"></div>
+      <canvas id="tempChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const map = L.map('map').setView([20.5937, 78.9629], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    let marker;
+
+    const apiKey = '0773f2a119a940901e081c2aaf881783';//'https://nominatim.openstreetmap.org';
+
+    async function getWeather() {
+      let location = document.getElementById("stateSelect").value;
+      if (location === "current") {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            const { latitude, longitude } = pos.coords;
+            updateMap(latitude, longitude);
+            fetchWeather(latitude, longitude);
+          }, () => alert("Location access denied."));
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      } else {
+        try {
+          const geo = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location},India`);
+          const data = await geo.json();
+          if (!data || data.length === 0) throw new Error("No results from Nominatim");
+          const lat = parseFloat(data[0].lat);
+          const lon = parseFloat(data[0].lon);
+          updateMap(lat, lon);
+          fetchWeather(lat, lon);
+        } catch (err) {
+          alert("Failed to fetch coordinates from Nominatim.");
+        }
+      }
+    }
+
+    function updateMap(lat, lon) {
+      map.setView([lat, lon], 10);
+      if (marker) map.removeLayer(marker);
+      marker = L.marker([lat, lon]).addTo(map);
+    }
+
+    async function fetchWeather(lat, lon) {
+      try {
+        const res = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`);
+        const city = res.data.city.name;
+        const temps = res.data.list.slice(0, 8).map(entry => entry.main.temp);
+        const times = res.data.list.slice(0, 8).map(entry => new Date(entry.dt_txt).getHours() + ":00");
+
+        document.getElementById("location").innerText = `Location: ${city}`;
+
+        const ctx = document.getElementById('tempChart').getContext('2d');
+        if (window.tempChart) window.tempChart.destroy();
+        window.tempChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: times,
+            datasets: [{
+              label: 'Temperature (°C)',
+              data: temps,
+              borderColor: '#ffffff',
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#fff',
+              pointBorderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: 'white' } }
+            },
+            scales: {
+              x: { ticks: { color: 'white' } },
+              y: { ticks: { color: 'white' } }
+            }
+          }
+        });
+      } catch (err) {
+        alert("Failed to fetch weather data. Check API key and try again.");
+      }
+    }
+  </script>
+</body>
+</html>

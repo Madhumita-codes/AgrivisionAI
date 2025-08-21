@@ -1,0 +1,108 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #f4f6f9, #e0f7fa);
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Header Section */
+.header {
+  background: linear-gradient(to right, #00bcd4, #2196f3);
+  color: white;
+  text-align: center;
+  padding: 60px 20px 40px;
+  animation: slideDown 1s ease;
+}
+
+.header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+/* Container & Cards */
+.container {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  animation: fadeIn 1.5s ease-in;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  color: #00796b;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.card p {
+  font-size: 1em;
+  color: #444;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #e0f2f1;
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 40px;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

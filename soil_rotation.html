@@ -1,0 +1,239 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotational Planner for Farmers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 min-h-screen flex items-center justify-center p-6">
+
+  <div class="bg-white shadow-lg rounded-2xl p-8 max-w-xl w-full">
+    <h1 class="text-3xl font-bold mb-4 text-green-700">Soil-Based Rotational Planner</h1>
+    <p class="text-gray-600 mb-6">Select your soil type to get a suggested crop rotation plan.</p>
+
+    <select id="soilType" class="w-full p-3 rounded-lg border border-green-400 mb-6 text-gray-700">
+      <option value="">-- Select Soil Type --</option>
+      <option value="loamy">Loamy</option>
+      <option value="sandy">Sandy</option>
+      <option value="clayey">Clayey</option>
+      <option value="silty">Silty</option>
+      <option value="peaty">Peaty</option>
+      <option value="chalky">Chalky</option>
+    </select>
+
+    <div id="planResult" class="bg-green-50 border border-green-300 rounded-lg p-4 text-gray-800 hidden"></div>
+  </div>
+
+  <script>
+    const plans = {
+      loamy: `
+        <strong>Year 1:</strong> Maize or Wheat<br>
+        <strong>Year 2:</strong> Legumes (e.g., Chickpeas, Lentils)<br>
+        <strong>Year 3:</strong> Root crops (e.g., Carrots, Potatoes)<br>
+        <strong>Year 4:</strong> Green manure or cover crop
+      `,
+      sandy: `
+        <strong>Year 1:</strong> Peanuts or Watermelon<br>
+        <strong>Year 2:</strong> Sweet potatoes<br>
+        <strong>Year 3:</strong> Legumes (e.g., Cowpeas)<br>
+        <strong>Year 4:</strong> Barley or Millet
+      `,
+      clayey: `
+        <strong>Year 1:</strong> Rice or Soybeans<br>
+        <strong>Year 2:</strong> Cabbage or Broccoli<br>
+        <strong>Year 3:</strong> Pulses<br>
+        <strong>Year 4:</strong> Sunflower or Mustard
+      `,
+      silty: `
+        <strong>Year 1:</strong> Wheat or Barley<br>
+        <strong>Year 2:</strong> Leafy vegetables (e.g., Spinach)<br>
+        <strong>Year 3:</strong> Legumes<br>
+        <strong>Year 4:</strong> Root crops
+      `,
+      peaty: `
+        <strong>Year 1:</strong> Potatoes<br>
+        <strong>Year 2:</strong> Cabbage or Cauliflower<br>
+        <strong>Year 3:</strong> Carrots or Radish<br>
+        <strong>Year 4:</strong> Green manure
+      `,
+      chalky: `
+        <strong>Year 1:</strong> Beans or Peas<br>
+        <strong>Year 2:</strong> Spinach or Beets<br>
+        <strong>Year 3:</strong> Rye or Oats<br>
+        <strong>Year 4:</strong> Clover (cover crop)
+      `
+    };
+
+    const dropdown = document.getElementById('soilType');
+    const planResult = document.getElementById('planResult');
+
+    dropdown.addEventListener('change', () => {
+      const soil = dropdown.value;
+      if (soil && plans[soil]) {
+        planResult.innerHTML = `<h2 class="font-bold text-green-600 mb-2">Recommended Rotation Plan:</h2>${plans[soil]}`;
+        planResult.classList.remove('hidden');
+      } else {
+        planResult.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🌱 Rotational Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Falling Leaf Animation */
+    .leaf {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://i.ibb.co/2dJscHS/leaf.png'); /* Replace with your own leaf if needed */
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: fall 10s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Generate multiple leaves dynamically */
+    .leaf:nth-child(2) { left: 10%; animation-delay: 2s; }
+    .leaf:nth-child(3) { left: 20%; animation-delay: 4s; }
+    .leaf:nth-child(4) { left: 35%; animation-delay: 1s; }
+    .leaf:nth-child(5) { left: 50%; animation-delay: 3s; }
+    .leaf:nth-child(6) { left: 65%; animation-delay: 5s; }
+    .leaf:nth-child(7) { left: 80%; animation-delay: 0s; }
+    .leaf:nth-child(8) { left: 90%; animation-delay: 2.5s; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-green-200 via-blue-100 to-lime-100 min-h-screen relative overflow-hidden">
+
+  <!-- Falling Leaves -->
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+
+  <!-- Main Content -->
+  <div class="flex justify-center items-center min-h-screen px-4 z-10 relative">
+    <div class="bg-white/90 backdrop-blur-lg shadow-2xl rounded-3xl p-10 max-w-2xl w-full border border-green-200">
+      <h1 class="text-4xl font-extrabold text-green-700 mb-3 text-center animate-pulse">🌾 Rotational Planner</h1>
+      <p class="text-gray-700 mb-6 text-center">Select your soil type below to view a recommended crop rotation plan tailored to your land.</p>
+
+      <div class="mb-6">
+        <label for="soilType" class="block text-lg font-semibold text-green-700 mb-2">🧪 Choose Soil Type:</label>
+        <select id="soilType" class="w-full p-3 rounded-xl border border-green-400 bg-green-100 text-gray-800 focus:ring-4 focus:ring-green-300 transition-all ease-in-out duration-300">
+          <option value="">-- Select Soil Type --</option>
+          <option value="loamy">Loamy</option>
+          <option value="sandy">Sandy</option>
+          <option value="clayey">Clayey</option>
+          <option value="silty">Silty</option>
+          <option value="peaty">Peaty</option>
+          <option value="chalky">Chalky</option>
+        </select>
+      </div>
+
+      <div id="planResult" class="bg-green-50 border border-green-300 rounded-xl p-5 hidden transition-all duration-500 ease-in-out">
+        <!-- Plan result will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const plans = {
+      loamy: `
+        <h2 class="text-xl font-bold text-green-700 mb-2">🌱 Loamy Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Maize or Wheat</li>
+          <li><strong>Year 2:</strong> Legumes (Chickpeas, Lentils)</li>
+          <li><strong>Year 3:</strong> Root crops (Carrots, Potatoes)</li>
+          <li><strong>Year 4:</strong> Green manure or cover crop</li>
+        </ul>
+      `,
+      sandy: `
+        <h2 class="text-xl font-bold text-yellow-700 mb-2">🏜️ Sandy Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Peanuts or Watermelon</li>
+          <li><strong>Year 2:</strong> Sweet potatoes</li>
+          <li><strong>Year 3:</strong> Legumes (Cowpeas)</li>
+          <li><strong>Year 4:</strong> Barley or Millet</li>
+        </ul>
+      `,
+      clayey: `
+        <h2 class="text-xl font-bold text-red-700 mb-2">🏺 Clayey Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Rice or Soybeans</li>
+          <li><strong>Year 2:</strong> Cabbage or Broccoli</li>
+          <li><strong>Year 3:</strong> Pulses</li>
+          <li><strong>Year 4:</strong> Sunflower or Mustard</li>
+        </ul>
+      `,
+      silty: `
+        <h2 class="text-xl font-bold text-indigo-700 mb-2">🌊 Silty Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Wheat or Barley</li>
+          <li><strong>Year 2:</strong> Leafy vegetables (Spinach)</li>
+          <li><strong>Year 3:</strong> Legumes</li>
+          <li><strong>Year 4:</strong> Root crops</li>
+        </ul>
+      `,
+      peaty: `
+        <h2 class="text-xl font-bold text-purple-700 mb-2">🌾 Peaty Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Potatoes</li>
+          <li><strong>Year 2:</strong> Cabbage or Cauliflower</li>
+          <li><strong>Year 3:</strong> Carrots or Radish</li>
+          <li><strong>Year 4:</strong> Green manure</li>
+        </ul>
+      `,
+      chalky: `
+        <h2 class="text-xl font-bold text-pink-700 mb-2">🪨 Chalky Soil Rotation Plan</h2>
+        <ul class="list-disc pl-5 space-y-1 text-gray-800">
+          <li><strong>Year 1:</strong> Beans or Peas</li>
+          <li><strong>Year 2:</strong> Spinach or Beets</li>
+          <li><strong>Year 3:</strong> Rye or Oats</li>
+          <li><strong>Year 4:</strong> Clover (cover crop)</li>
+        </ul>
+      `
+    };
+
+    const dropdown = document.getElementById('soilType');
+    const planResult = document.getElementById('planResult');
+
+    dropdown.addEventListener('change', () => {
+      const soil = dropdown.value;
+      if (soil && plans[soil]) {
+        planResult.innerHTML = plans[soil];
+        planResult.classList.remove('hidden');
+        planResult.classList.add('animate-fade-in');
+      } else {
+        planResult.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

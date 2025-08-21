@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stylish Weather Widget</title>
+  <style>
+    body {
+      background: #121212;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .weather-widget {
+      background: linear-gradient(135deg, #7F00FF, #E100FF, #FF6F00);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      color: #fff;
+      padding: 30px 25px;
+      width: 320px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .weather-widget:hover {
+      transform: scale(1.03);
+    }
+
+    .weather-widget::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background-image: radial-gradient(white 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .weather-widget:hover::before {
+      opacity: 0.2;
+      animation: sparkle 4s linear infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes sparkle {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100px, 100px); }
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .weather-info {
+      font-size: 18px;
+      text-align: left;
+    }
+
+    .weather-info p {
+      margin: 10px 0;
+    }
+
+    .icon {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="weather-widget" id="weather">
+  <h2>Loading...</h2>
+</div>
+
+<script>
+  const apiKey = '27eb547a88e1f75319c41223261018c2'; // 🔑 Replace with your OpenWeatherMap API key
+  const city = 'Kolkata'; // 🏙️ Change to desired location
+
+  async function fetchWeather() {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const temperature = data.main.temp;
+    const humidity = data.main.humidity;
+    const windSpeed = data.wind.speed;
+
+    document.getElementById('weather').innerHTML = `
+      <h2>🌤️ Weather in ${city}</h2>
+      <div class="weather-info">
+        <p><span class="icon">🌡️</span><strong>Temperature:</strong> ${temperature} °C</p>
+        <p><span class="icon">💧</span><strong>Humidity:</strong> ${humidity}%</p>
+        <p><span class="icon">🌬️</span><strong>Wind Speed:</strong> ${windSpeed} m/s</p>
+      </div>
+    `;
+  }
+
+  fetchWeather();
+</script>
+
+</body>
+</html>

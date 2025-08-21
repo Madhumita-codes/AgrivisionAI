@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corn Farming Information</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f9f871, #a8e063);
+      animation: gradientShift 15s infinite alternate;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .fade-in {
+      animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <header class="text-white bg-yellow-600 p-6 text-center shadow-lg">
+    <h1 class="text-4xl font-bold animate-pulse">🌽 Corn Farming Guide for Farmers</h1>
+    <p class="text-xl mt-2">Everything you need to know about growing and selling corn</p>
+  </header>
+
+  <main class="p-6 grid md:grid-cols-2 gap-6 fade-in">
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1600692281273-d7eec03b2b0a?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Corn Field" />
+      <h2 class="text-2xl font-bold mb-2">🌱 Growing Period</h2>
+      <p>Corn takes approximately <strong>90 to 120 days</strong> to reach maturity, depending on the variety and climate conditions.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1604164043874-20bd6c0b019d?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Corn Market" />
+      <h2 class="text-2xl font-bold mb-2">💰 Current Market Price</h2>
+      <p>The current market price of corn is <strong>₹20-₹25 per kg</strong> (prices may vary by region and demand).</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Temperature" />
+      <h2 class="text-2xl font-bold mb-2">🌡️ Suitable Temperature</h2>
+      <p>Corn grows best in temperatures between <strong>18°C and 27°C</strong>. Avoid planting during frost or extreme heat.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1569025695168-3c4ea9a1c99c?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Demand" />
+      <h2 class="text-2xl font-bold mb-2">📈 Market Demand</h2>
+      <p>Corn has a <strong>high demand</strong> in industries like food processing, cattle feed, ethanol production, and popcorn manufacturing.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1583337130417-3346a1c1b1aa?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Crop Type" />
+      <h2 class="text-2xl font-bold mb-2">🌾 Crop Type</h2>
+      <p>Corn is a <strong>Kharif crop</strong> in India, generally sown during the monsoon season (June–July) and harvested in October–November.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1632322329386-7050c6aef8ef?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Tips" />
+      <h2 class="text-2xl font-bold mb-2">✨ Additional Tips</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Use well-drained loamy soil with pH 5.5-7.0</li>
+        <li>Apply balanced fertilizers (NPK ratio 2:1:1)</li>
+        <li>Practice crop rotation to reduce pests</li>
+        <li>Ensure proper irrigation during tasseling and silking stages</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bg-yellow-600 text-white text-center py-4 mt-6">
+    <p> AgriVision AI | Designed to empower Indian farmers 🌾</p>
+  </footer>
+</body>
+</html>

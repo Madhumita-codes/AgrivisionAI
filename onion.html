@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onion Farming Information</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      animation: backgroundFlow 15s infinite alternate;
+    }
+    @keyframes backgroundFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .fade-in {
+      animation: fadeInUp 1.5s ease-in-out;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <header class="bg-purple-700 text-white p-6 text-center shadow-lg">
+    <h1 class="text-4xl font-bold animate-pulse">🧅 Onion Farming Guide for Farmers</h1>
+    <p class="text-lg mt-1">All essential details to grow and sell onions successfully</p>
+  </header>
+
+  <main class="p-6 grid md:grid-cols-2 gap-6 fade-in">
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1581594549595-821f94c5e005?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Onion Field" />
+      <h2 class="text-2xl font-bold mb-2">🌱 Growing Period</h2>
+      <p>Onions take about <strong>90 to 150 days</strong> from sowing to harvesting depending on the variety.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1616410730143-e15a4ed90f95?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Market Price" />
+      <h2 class="text-2xl font-bold mb-2">💰 Current Market Price</h2>
+      <p>The market price for onions ranges from <strong>₹15–₹40 per kg</strong> based on season and demand.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1524592916615-86a010e1c4ec?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Temperature" />
+      <h2 class="text-2xl font-bold mb-2">🌡️ Suitable Temperature</h2>
+      <p>Onions thrive in temperatures between <strong>13°C to 25°C</strong> and require cool weather during early growth.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1582479353135-f29d62531834?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Demand" />
+      <h2 class="text-2xl font-bold mb-2">📈 Market Demand</h2>
+      <p>Onions have <strong>steady and high demand</strong> across India for household and commercial cooking purposes.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1582738416385-b88c78f6dc39?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Crop Type" />
+      <h2 class="text-2xl font-bold mb-2">🌾 Crop Type</h2>
+      <p>Onion is a <strong>Rabi and Kharif crop</strong>. Rabi onions are sown in October–November; Kharif onions in June–July.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1615491353872-b1b4c2d91435?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Tips" />
+      <h2 class="text-2xl font-bold mb-2">✨ Additional Tips</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Requires well-drained loamy soil with pH 6.0–7.0</li>
+        <li>Apply phosphorus and potassium at land preparation stage</li>
+        <li>Irrigate properly at bulb formation stage</li>
+        <li>Use disease-resistant varieties like Bhima Super and NHRDF Red</li>
+        <li>Control pests like thrips and onion fly using safe insecticides</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bg-purple-700 text-white text-center py-4 mt-6">
+    <p> AgriVision AI | Helping Farmers Grow Smarter 🧅</p>
+  </footer>
+</body>
+</html>

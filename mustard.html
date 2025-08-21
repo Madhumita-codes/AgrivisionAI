@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mustard Farming Information</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #f6d365, #fda085);
+      animation: gradientFlow 20s infinite alternate;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .fade-in {
+      animation: fadeIn 1.5s ease-in;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <header class="bg-yellow-700 text-white p-6 text-center shadow-lg">
+    <h1 class="text-4xl font-bold animate-pulse">🌿 Mustard Farming Guide for Farmers</h1>
+    <p class="text-lg mt-1">Comprehensive Information for Successful Mustard Cultivation</p>
+  </header>
+
+  <main class="p-6 grid md:grid-cols-2 gap-6 fade-in">
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1671075394303-c348ed9c02a0?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Mustard Field" />
+      <h2 class="text-2xl font-bold mb-2">🌱 Growing Period</h2>
+      <p>Mustard takes <strong>90 to 120 days</strong> to mature, depending on the variety and climate.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1614352422085-6b07decb98fd?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Mustard Market" />
+      <h2 class="text-2xl font-bold mb-2">💰 Current Market Price</h2>
+      <p>The average market price of mustard seeds is around <strong>₹60–₹70 per kg</strong>, depending on quality and location.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1632664064946-5c8b19659d9e?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Climate" />
+      <h2 class="text-2xl font-bold mb-2">🌡️ Suitable Temperature</h2>
+      <p>Mustard grows best in temperatures between <strong>10°C to 25°C</strong>. It is ideal for cool and dry weather.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <img src="https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Demand" />
+      <h2 class="text-2xl font-bold mb-2">📈 Market Demand</h2>
+      <p>Mustard is in <strong>high demand</strong> for oil extraction, spices, and condiment industries, especially in northern India.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1585257306075-e24992648b37?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Crop Type" />
+      <h2 class="text-2xl font-bold mb-2">🌾 Crop Type</h2>
+      <p>Mustard is a <strong>Rabi crop</strong>, sown in October–November and harvested by February–March.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-xl p-6">
+      <ig src="https://images.unsplash.com/photo-1580812031547-9d5b00a4449e?auto=format&fit=crop&w=800&q=60" class="rounded-xl w-full mb-4" alt="Tips" />
+      <h2 class="text-2xl font-bold mb-2">✨ Additional Tips</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Grows well in loamy or sandy loam soil with good drainage</li>
+        <li>Maintain pH between 6.0 and 7.5</li>
+        <li>Apply proper irrigation during flowering and pod filling</li>
+        <li>Use certified seeds and treat them before sowing</li>
+        <li>Protect from aphids and white rust through timely spraying</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bg-yellow-700 text-white text-center py-4 mt-6">
+    <p> AgriVision AI | Empowering Farmers with Knowledge 🌾</p>
+  </footer>
+</body>
+</html>

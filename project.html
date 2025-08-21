@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriVision AI - Smart Farming Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 400px;
+            border-radius: 0.75rem;
+        }
+        .animate-pulse-opacity {
+            animation: pulseOpacity 2s infinite;
+        }
+        @keyframes pulseOpacity {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+</style>
+
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-green-600 to-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <img src="logoA.jpeg" alt="AgriVision AI logo - green leaf with circuit pattern overlay" class="h-10 w-10 rounded-full" />
+                    <h1 class="text-2xl font-bold">AgriVision AI</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#dashboard" class="hover:text-green-200 transition">Dashboard</a>
+                    <a href="#crops" class="hover:text-green-200 transition">Crops</a>
+                    <a href="#weather" class="hover:text-green-200 transition">Weather</a>
+                    <a href="#markets" class="hover:text-green-200 transition">Markets</a>
+                    <a href="mapp.html" class="hover:text-green-200 transition">Map</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..." class="bg-green-700 text-white placeholder-green-200 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    </div>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6386e65b-d9d9-401e-a2a3-3aada5571aa7.png" alt="User profile picture - middle-aged farmer with hat smiling" class="h-10 w-10 rounded-full border-2 border-white" />
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!--<link rel="stylesheet" href="widgetcs.css" />-->
+
+        <div class="p-4 rounded-lg bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200" id="weather">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Loading...  :)</h3>
+        </div>
+        <script src="widgetscr.js"></script>
+        <!-- Dashboard Overview -->
+        <section id="dashboard" class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Farm Overview</h2>
+                <div class="text-sm text-gray-500">
+                    Last updated: <span id="lastUpdated">Today, 10:30 AM</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Field Health</p>
+                            <p class="text-2xl font-bold text-gray-800">85%</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fdb8c70e-fceb-48e7-a021-44be6671f707.png" alt="Green healthy plant icon" class="h-5 w-5" />
+                        </div>
+                    </div>
+                    <div class="mt-3 h-2 w-full bg-gray-200 rounded-full">
+                        <div class="h-2 bg-green-500 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Soil Moisture</p>
+                            <p class="text-2xl font-bold text-gray-800">72%</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0cd95e3e-3034-4b34-899b-696238c02b08.png" alt="Water drop icon" class="h-5 w-5" />
+                        </div>
+                    </div>
+                    <div class="mt-3 h-2 w-full bg-gray-200 rounded-full">
+                        <div class="h-2 bg-blue-500 rounded-full" style="width: 72%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-yellow-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Pest Alert</p>
+                            <p class="text-2xl font-bold text-gray-800">Low</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e95fc998-4f3c-4ebc-b5a2-686aa4542a01.png" alt="Bug icon with warning sign" class="h-5 w-5" />
+                        </div>
+                    </div>
+                    <div class="mt-3 h-2 w-full bg-gray-200 rounded-full">
+                        <div class="h-2 bg-yellow-500 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Yield Prediction</p>
+                            <p class="text-2xl font-bold text-gray-800">4.2 t/ha</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5fc637eb-fe30-44ee-99d4-e316bb18c38e.png" alt="Bar chart showing upward trend" class="h-5 w-5" />
+                        </div>
+                    </div>
+                    <div class="mt-3 h-2 w-full bg-gray-200 rounded-full">
+                        <div class="h-2 bg-purple-500 rounded-full" style="width: 84%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Field Satellite View</h3>
+                        <br>
+                        <!--
+                        <div class="bg-green-100 hover:bg-blue-200 text-red-700 px-3 py-1 rounded-md text-sm">
+                            <p>Enter the location : 
+                                <select name="location" id="card_type" onchange="window.location.href=this.value;">
+                                    <option value="">--Select an option--</option>
+                                    <option value="menupages/page1.html">KOLKATA</option>
+                                    <option value="menupages/page2.html">MUMBAI</option>
+                                    <option value="menupages/page3.html">HYDERABAD</option>
+                                    <option value="mapp.html">UTTAR PRADESH</option>
+                                    <option value="jharkhand">JHARKHAND</option>
+                                    <option value="kerela">KERELA</option>
+                                </select>
+                            </p>
+                        </div>
+                        -->
+                        <br>
+                            <div class="flex space-x-2">
+                                <button class="bg-green-100 hover:bg-blue-200 text-red-700 px-10 py-1 rounded-md text-sm" onclick="document.location='mapp.html'">Enter the location</button>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="bg-green-100 hover:bg-blue-200 text-red-700 px-10 py-1 rounded-md text-sm" onclick="document.location='weather.html'">Weather Forecast</button>
+                            </div>
+                            <!--
+                            <div class="dropdown">
+                            <button class="dropbtn">Choose Category</button>
+                            <div class="dropdown-content">
+                                <a href="menupages/page1.html">hi1</a>
+                                <a href="menupages/page2.html">hi2</a>
+                                <a href="menupages/page3.html">hi3</a>
+                            </div>
+                            </div>
+                            -->
+                        
+                        <div class="flex space-x-2">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">NDVI</button>
+                            <button class="bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm">Thermal</button>
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Moisture</button>
+                        </div>
+                    </div>
+                    <div id="map" class="w-full"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Action Items</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                            <div class="flex-shrink-0 mt-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aac6137e-807a-43b9-a20e-552b68fb8cd0.png" alt="Watering can icon - urgent action needed" class="h-5 w-5 text-blue-500" />
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">Irrigation Needed</p>
+                                <p class="text-sm text-gray-600">Section B requires watering in the next 24 hours</p>
+                                <button class="mt-2 text-blue-600 text-sm font-medium hover:text-blue-800">Schedule Irrigation</button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
+                            <div class="flex-shrink-0 mt-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/df86c82e-2085-40ab-a52e-138158ca0d04.png" alt="Bug spray icon - pest alert" class="h-5 w-5 text-yellow-500" />
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">Pest Alert</p>
+                                <p class="text-sm text-gray-600">Early signs of aphids detected in the northern quadrant</p>
+                                <button class="mt-2 text-yellow-600 text-sm font-medium hover:text-yellow-800">View Treatment Options</button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                            <div class="flex-shrink-0 mt-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/83f17294-119c-4fcb-acca-40a90cfcb840.png" alt="Calendar icon - optimal planting window" class="h-5 w-5 text-green-500" />
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">Optimal Planting Window</p>
+                                <p class="text-sm text-gray-600">Best time to plant potatoes opens in 3 days</p>
+                                <button class="mt-2 text-green-600 text-sm font-medium hover:text-green-800">Plan Planting</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+
+
+            </div>
+        </section>
+
+        <!-- Crop Recommendations -->
+        <section id="crops" class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Crop Recommendations</h2>
+           
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Personalized Crop Suggestions</h3>
+                        <p class="text-gray-600">Based on your soil conditions, weather patterns and market demand</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Save Plan</button>
+                        <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md">Export Data</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-medium text-gray-800">Best Match</h4>
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-md">Top Pick</span>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="cropim/corn.jpg" alt="Field of quinoa plants ready for harvest with golden color" class="h-16 w-16 rounded-full object-cover border-2 border-white shadow" />
+                            <div>
+                                <p class="font-bold text-gray-900">Maize (Corn)</p>
+                                <p class="text-sm text-gray-600">90% match with your conditions</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Profit Potential</span>
+                                <span class="text-sm font-medium text-green-600">High (+22%)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Water Needs</span>
+                                <span class="text-sm font-medium text-blue-600">Medium</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Growing Period</span>
+                                <span class="text-sm font-medium text-gray-800">90-110 days</span>
+                            </div>
+                        </div>
+                        <button  class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md" onclick="document.location='corn.html'">Select Crop</button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-medium text-gray-800">Alternative</h4>
+                            <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-md">Good Fit</span>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="cropim/mustard.png" alt="Rows of chickpea plants in field with pods visible" class="h-16 w-16 rounded-full object-cover border-2 border-white shadow" />
+                            <div>
+                                <p class="font-bold text-gray-900">Mustard</p>
+                                <p class="text-sm text-gray-600">82% match with your conditions</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Profit Potential</span>
+                                <span class="text-sm font-medium text-green-600">High (+18%)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Water Needs</span>
+                                <span class="text-sm font-medium text-blue-600">Low</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Growing Period</span>
+                                <span class="text-sm font-medium text-gray-800">90-120 days</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md" onclick="document.location='mustard.html'">Select Crop</button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-medium text-gray-800">Innovative Option</h4>
+                            <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-md">Emerging</span>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="cropim/onion.png" alt="Field of teff grass with its characteristic seed heads" class="h-16 w-16 rounded-full object-cover border-2 border-white shadow" />
+                            <div>
+                                <p class="font-bold text-gray-900">Onion</p>
+                                <p class="text-sm text-gray-600">76% match with your conditions</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Profit Potential</span>
+                                <span class="text-sm font-medium text-green-600">Medium (+30%)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Water Needs</span>
+                                <span class="text-sm font-medium text-blue-600">Medium</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Growing Period</span>
+                                <span class="text-sm font-medium text-gray-800">90-120 days</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md" onclick="document.location='onion.html'">Select Crop</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Crop Planning Tools</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8e67b12a-70b6-4cad-86b6-59329f68272b.png" alt="Soil health test kit icon" class="h-10 w-10 mb-3" />
+                        <button class="font-medium text-gray-800 mb-2" onclick="document.location='soil_analysis.html'">Soil Analysis</h4>
+                        <p class="text-sm text-gray-600">Get detailed nutrient and pH levels from soil sensors</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/87b73fbb-4c19-4101-bfb0-7f4da74f3f16.png" alt="Rotating arrows icon representing crop rotation" class="h-10 w-10 mb-3" />
+                        <button onclick="document.location='soil_rotation.html'" class="font-medium text-gray-800 mb-2" onclick="document.location='soil_analysis.html'">Rotation Planner</h4>
+                        <p class="text-sm text-gray-600">Optimize your crop rotation for soil health</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/600a48c4-9a5b-4aa0-8cd2-7e26922df7dd.png" alt="Calculator icon for cost analysis" class="h-10 w-10 mb-3" />
+                        <h4 class="font-medium text-gray-800 mb-2" onclick="document.location='soil_analysis.html'">Cost Calculator</h4>
+                        <p class="text-sm text-gray-600">Estimate input costs and potential returns</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4034b22b-fe45-4b67-a066-7d6d483ed411.png" alt="Robot head icon representing AI advisor" class="h-10 w-10 mb-3" />
+                        <h4 class="font-medium text-gray-800 mb-2" onclick="document.location='soil_analysis.html'">AI Advisor</h4>
+                        <p class="text-sm text-gray-600">Get personalized recommendations from our AI</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Forecast -->
+        <section id="weather" class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Weather Forecast & Insights</h2>
+           
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">7-Day Forecast</h3>
+                        <div class="flex items-center space-x-3">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Precipitation</button>
+                            <button class="bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-md text-sm">Temperature</button>
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Wind</button>
+                        </div>
+                    </div>
+                    <canvas id="weatherChart" height="150"></canvas>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Weather Alerts</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6eafa540-09e5-4340-ad94-92cae9ff618d.png" alt="Warning triangle icon" class="h-5 w-5 text-yellow-500" />
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Heat Wave Advisory</p>
+                                    <p class="text-sm text-gray-600">High temperatures expected this weekend (35°C+)</p>
+                                    <p class="text-xs text-yellow-600 mt-1">Recommended: Increase irrigation frequency</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1bb9c724-b115-4766-829d-3b02942d7607.png" alt="Rain cloud icon" class="h-5 w-5 text-blue-500" />
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Rain Expected</p>
+                                    <p class="text-sm text-gray-600">40% chance of rain in 3 days (expected 15mm)</p>
+                                    <p class="text-xs text-blue-600 mt-1">Recommended: Delay fertilizer application</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Hyperlocal Microclimate</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-500 mb-2">Current Temp</p>
+                        <div class="flex items-end">
+                            <p class="text-3xl font-bold text-gray-800">24.5°C</p>
+                            <div class="ml-2 flex items-center text-green-500 text-sm">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aefd4116-478e-4a10-b194-ed29f8d581e4.png" alt="Up arrow indicating temperature rise" class="h-3 w-3 mr-1" />
+                                <span>+2.1°C</span>
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-center text-gray-500 text-sm">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ba706641-6752-4b19-be08-ad02acb01769.png" alt="Thermometer icon" class="h-3 w-3 mr-1" />
+                            <span>Feels like 25.8°C</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-500 mb-2">Soil Temperature</p>
+                        <p class="text-3xl font-bold text-gray-800">18.2°C</p>
+                        <div class="mt-2">
+                            <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                <span>6am: 15.7°C</span>
+                                <span>12pm: 19.1°C</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                <div class="bg-orange-500 h-1.5 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-500 mb-2">Humidity</p>
+                        <div class="flex items-center">
+                            <p class="text-3xl font-bold text-gray-800">62%</p>
+                            <div class="ml-4 flex-1">
+                                <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 62%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>Dry</span>
+                                    <span>Comfort</span>
+                                    <span>Humid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-500 mb-2">Wind Speed</p>
+                        <div class="flex items-end">
+                            <p class="text-3xl font-bold text-gray-800">12 km/h</p>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4ce2cbce-e421-45f7-a8e8-ded039da6660.png" alt="Wind direction arrow pointing northeast" class="h-6 w-6 ml-2 transform rotate-45" />
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">NE, Gusting to 18 km/h</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Insights -->
+        <section id="markets" class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Market Insights & Pricing</h2>
+           
+            <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Commodity Price Trends</h3>
+                        <p class="text-gray-600">Real-time market data for your selected region</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm">Grains</button>
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Vegetables</button>
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Fruits</button>
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">Pulses</button>
+                    </div>
+                </div>
+                <canvas id="marketChart" height="200"></canvas>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Best Selling Dates</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b1589122-48c4-4524-9395-70187b12cfff.png" alt="Small red tomatoes with green stems" class="h-8 w-8 rounded-full mr-3" />
+                                    <span class="font-medium">Tomatoes</span>
+                                </div>
+                                <span class="text-sm text-green-600 font-medium">+15% demand</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Peak Price: ₹65/kg</span>
+                                <span>Optimal Week: Jun 12-18</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e029691c-ccee-4ca8-91e3-2268c8e6dc7c.png" alt="Fresh green onions bundled together" class="h-8 w-8 rounded-full mr-3" />
+                                    <span class="font-medium">Onions</span>
+                                </div>
+                                <span class="text-sm text-green-600 font-medium">+8% demand</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Peak Price: ₹32/kg</span>
+                                <span>Optimal Week: Jun 26-Jul 2</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/71924580-cbe2-46e4-bf2c-b0a8aae0d4b7.png" alt="Basmati rice grains in wooden bowl" class="h-8 w-8 rounded-full mr-3" />
+                                    <span class="font-medium">Basmati Rice</span>
+                                </div>
+                                <span class="text-sm text-yellow-600 font-medium">Stable</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Current Price: ₹80/kg</span>
+                                <span>Stable until Sept</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Market Intelligence</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                            <h4 class="font-medium text-gray-800 mb-2">Export Opportunities</h4>
+                            <p class="text-sm text-gray-600 mb-3">Increased demand for organic quinoa in European markets. Potential premium price of +40%.</p>
+                            <button class="text-blue-600 text-sm font-medium hover:text-blue-800">View Trade Partners →</button>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200">
+                            <h4 class="font-medium text-gray-800 mb-2">New Market Trend</h4>
+                            <p class="text-sm text-gray-600 mb-3">Urban consumers paying premium for specialty crops with traceability.</p>
+                            <button class="text-purple-600 text-sm font-medium hover:text-purple-800">Learn Blockchain Traceability →</button>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+                            <h4 class="font-medium text-gray-800 mb-2">Local Buyer Network</h4>
+                            <p class="text-sm text-gray-600 mb-3">3 new farm-to-table restaurants seeking direct supply contracts in your area.</p>
+                            <button class="text-green-600 text-sm font-medium hover:text-green-800">Connect with Buyers →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Advisor Section -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-xl shadow-lg overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-2/3 p-8 text-white">
+                        <h2 class="text-2xl font-bold mb-4">AI Farming Advisor</h2>
+                        <p class="mb-6">Get personalized recommendations based on your farm's unique conditions, satellite data, and market trends.</p>
+                        <div class="flex space-x-4">
+                            <div>
+                                <p class="text-3xl font-bold">1,500+</p>
+                                <p class="text-sm opacity-80">Satellite Images Analyzed</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">87%</p>
+                                <p class="text-sm opacity-80">Accuracy in Yield Prediction</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">24/7</p>
+                                <p class="text-sm opacity-80">Monitoring & Alerts</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 bg-white p-6 flex flex-col justify-center">
+                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Ask Your AI Advisor</h3>
+                            <textarea class="w-full p-3 border border-gray-300 rounded-md mb-3" rows="3" placeholder="e.g., What's the best crop to plant in my south field this season?"></textarea>
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">Get Recommendation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aa40348e-45c8-4265-83f5-b8fab15230bd.png" alt="AgriVision AI small logo" class="h-8 w-8 rounded-full" />
+                        <span class="text-xl font-bold">AgriVision AI</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Empowering farmers with AI-driven insights for sustainable and profitable agriculture.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Features</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Crop Advisor</a></li>
+                        <li><a href="#" class="hover:text-white transition">Weather AI</a></li>
+                        <li><a href="#" class="hover:text-white transition">Market Analytics</a></li>
+                        <li><a href="#" class="hover:text-white transition">Field Monitoring</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Knowledge Base</a></li>
+                        <li><a href="#" class="hover:text-white transition">API Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Case Studies</a></li>
+                        <li><a href="#" class="hover:text-white transition">Training Videos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d5566636-9914-476e-a60c-73c3d1f8e0dd.png" alt="Facebook social media icon" class="h-6 w-6" />
+                        </a>
+                        <a href="#">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8f66b88a-fa5a-433d-a430-08258dbcfa81.png" alt="Twitter social media icon" class="h-6 w-6" />
+                        </a>
+                        <a href="#">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e8afaf4c-4e56-4d88-8dea-fc94829f848b.png" alt="Instagram social media icon" class="h-6 w-6" />
+                        </a>
+                        <a href="#">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8f78b3fc-f6d4-4463-be78-7180d55342fa.png" alt="YouTube social media icon" class="h-6 w-6" />
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Subscribe to our newsletter for weekly farming insights</p>
+                    <div class="mt-3 flex">
+                        <input type="email" placeholder="Your email" class="bg-gray-700 text-white px-4 py-2 rounded-l-md focus:outline-none w-full" />
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-r-md">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-gray-400 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>© 2023 AgriVision AI. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                        <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
+                        <a href="#" class="hover:text-white transition">Cookie Settings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize the map
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize map
+            const map = L.map('map').setView([19.0760, 72.8777], 15); // Default to Mumbai coordinates
+           
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+           
+            // Add field boundary polygon
+            const field = L.polygon([
+                [19.0780, 72.8750],
+                [19.0780, 72.8800],
+                [19.0740, 72.8800],
+                [19.0740, 72.8750]
+            ], {color: 'green', fillOpacity: 0.2}).addTo(map);
+           
+            // Add field health markers
+            for (let i = 0; i < 10; i++) {
+                L.circleMarker([
+                    19.0750 + (Math.random() * 0.004 - 0.002),
+                    72.8765 + (Math.random() * 0.004 - 0.002)
+                ], {
+                    radius: 8,
+                    fillColor: '#10B981',
+                    color: '#fff',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+            }
+
+            // Initialize weather chart
+            const weatherCtx = document.getElementById('weatherChart').getContext('2d');
+            new Chart(weatherCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                            label: 'Max Temp (°C)',
+                            data: [28, 30, 32, 34, 36, 35, 33],
+                            borderColor: '#EF4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Min Temp (°C)',
+                            data: [22, 23, 24, 25, 26, 25, 23],
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            // Initialize market chart
+            const marketCtx = document.getElementById('marketChart').getContext('2d');
+            new Chart(marketCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Quinoa (₹/kg)',
+                            data: [120, 125, 130, 140, 145, 160],
+                            backgroundColor: '#10B981',
+                        },
+                        {
+                            label: 'Chickpeas (₹/kg)',
+                            data: [60, 65, 62, 70, 75, 80],
+                            backgroundColor: '#3B82F6',
+                        },
+                        {
+                            label: 'Teff (₹/kg)',
+                            data: [90, 95, 100, 110, 120, 130],
+                            backgroundColor: '#8B5CF6',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Update last updated time
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-US', options);
+        });
+    </script>
+    <!-- <script
+  src='https://cdn.jotfor.ms/agent/embedjs/0197e9c2ef4b7b818d76aaca0f113b59ca14/embed.js?skipWelcome=1&maximizable=1'>
+</script> -->
+
+<script
+  src='https://cdn.jotfor.ms/agent/embedjs/0197e9c2ef4b7b818d76aaca0f113b59ca14/embed.js?skipWelcome=1&maximizable=1'>
+</script>
+
+</body>
+</html>
